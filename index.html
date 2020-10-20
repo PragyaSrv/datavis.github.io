@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <title>Data Visualisation 6401 - Project 1</title>
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+  <div id="main">  
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <h1>Data Visualisation 6401 - Project 1</h1>
+          <h2>Pragya Srivastava</h2>
+        </div><!-- logo_text -->
+      </div><!-- logo -->      
+      <div id="menu">
+        <a href="index.html" id="current_page">Home</a> <a href="breakdown.html">Spending VS GDP</a> <a href="military.html">Military Spending</a> <a href="percap.html">Per Capita</a>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+     
+       
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawRegionsMap);      
+        
+
+      function drawRegionsMap() {
+        var data = google.visualization.arrayToDataTable([
+          ['Country', 'GDP'],['Australia', 1330],['Brazil', 2060],['China', 12300],['France', 2600],
+          ['Germany',3670],['India',2650],['Japan',4870],['Russia',1570],['United Kingdom',2670],['United States',19500]]);
+          
+        var options = {title:'GDP (in Billions) of selected G20 Countries', colorAxis: {colors: ['#99CCFF', '#333399']}};
+        var chart = new google.visualization.GeoChart(document.getElementById('div_G20map'));
+        chart.draw(data, options);
+      }
+
+               
+    </script>
+
+
+    <!-- 1. Visualising G20-->
+  <div class="spacing-between-row style-padding-small align-center" id="G20" align="middle">
+        <hr><h1 class="style-padding-large additional-margin-top">G20 Countries - Healthcare, Education and Military Spending</h1>
+        <p>This project is about analyzing the spends made by G20 countries on healthcare, education<br>
+         and military, comparing these spends to the GDP for each country. These indicators give us important <br>
+         insights into each country's policies regarding these sectors and their social welfare. For this study<br>
+         we have considered data from 2012 - 2017.<br>
+         <br>
+        For the purposes of this study, we have selected ten countries from the G20 and<br>
+        their GDP (in Billion $) as of 2017 is given in the map below.
+      <br>
+    </p>
+        <div id="div_G20map"></div>
+    </div>
+  <br>
+</html>

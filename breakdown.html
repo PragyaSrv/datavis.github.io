@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>G20 Countries Data - Spending VS GDP</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+
+        function drawAllSheets(){
+            drawSheetName('EducationExp', 'SELECT A,H,I', educationSpendingResponseHandler);
+            drawSheetName('HealthPercGDP', 'SELECT A,M,L', healthSpendingResponseHandler);
+            drawSheetName('AVGME', 'SELECT A,H,I', militarySpendingResponseHandler);
+            drawSheetName('EducationExp', 'SELECT A,O,P,Q', propResponseHandler);
+            
+            
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1gYnKJCaw9dFrzEe1McA-1tQ08jpbkG5-MgQIfaOZXJI/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function educationSpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Avg Education Spending VS GDP - 2012-17',
+                colors: ['#ECA403', '#E94D20'],
+                vAxis: {title: 'Spending in Trillions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('education_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function healthSpendingResponseHandler(response) {
+            var data = response.getDataTable();
+           
+
+            var options = {
+                title:'Avg Healthcare Spending VS GDP - 2012-17',
+                colors: ['#15A0C8', '#E94D20'],
+                vAxis: {title: 'Spending in Trillions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('health_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function militarySpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            
+            var options = {
+                title:'Avg Military Spending VS GDP - 2012-17',
+                colors: ['#63A74A', '#E94D20'],
+                vAxis: {title: 'Spending in Trillions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.ScatterChart(document.getElementById('military_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function propResponseHandler(response) {
+            var data = response.getDataTable();
+            
+            var options = {
+                title:'Proportion Spending - Total of Avg Military, Healthcare and Education',
+                colors: ['#b87333', 'silver','gold'],
+                vAxis: {title: 'Country', format:'short'},
+                hAxis: {title: 'Proportion of Total'},
+                isStacked: true
+            };
+
+            var chart = new google.visualization.BarChart(document.getElementById('prop_spending_div'));
+            chart.draw(data, options);
+        }
+
+
+        
+    </script>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>G20 Countries - Spending VS GDP</h1>
+        </div>
+        <div id="menu">
+            <a href="index.html">Home</a> <a href="breakdown.html" id="current_page">Spending VS GDP</a> <a href="military.html">Military Spending</a> <a href="percap.html">Per Capita</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+    <div id="content">
+        <p>
+            Given below is a comparison the spendings in various sectors - education, healthcare and military - to each country's GDP. The United States has the highest
+            GDP and leads the other countries in spends made in Military, Healthcare and Education.          
+        </p>       
+    </div><!-- content -->
+
+    <table class="columns">
+        <tr>
+          <td><div id="education_spending_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="health_spending_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="military_spending_div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+      </table>
+
+      <hr>
+      <div id="header">
+        <h1>G20 Countries - Proportion Spendings</h1>
+      </div>
+      <div id="content">
+        <p>
+            This section compares the proportional spendings in Military, Healthcare and Education as a total of these sectors. Most of the G20 countries, with the exception of
+            Russia and India spend the highest proportion on healthcare, followed by education and military         
+        </p>       
+    </div>
+      <div id="prop_spending_div" style= "width: 900px; height: 500px;"></div>
+      
+
+      <div class="style-margin style-content style-padding-relative" style="max-width:1200px;margin-top:50px"></div>
+      <div class="spacing-between-row style-padding-small align-center" id="G20" align="middle"></div>
+    </body>
+</html>
+    
+
+    
+
+
+
+    
+    
+
+        
+            
+                                  
+        
+            

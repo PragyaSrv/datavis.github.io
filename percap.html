@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>G20 Countries Data - Spending VS GDP</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+
+        function drawAllSheets(){
+            drawSheetName('percap', 'SELECT A,B,C,D,E', gdpercapResponseHandler);
+            drawSheetName('HLT', 'SELECT M,O,R,U,X,AA,AD,AG,AJ,AM,AP', growthhlResponseHandler);
+            drawSheetName('HLT', 'SELECT M,P,S,V,Y,AB,AE,AH,AK,AN,AQ', growthhlabsResponseHandler);
+            drawSheetName('EdT', 'SELECT M,O,R,U,X,AA,AD,AG,AJ,AM,AP', growthedResponseHandler);
+            drawSheetName('EdT', 'SELECT M,P,S,V,Y,AB,AE,AH,AK,AN,AQ', growthedabsResponseHandler);
+                        
+            
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1gYnKJCaw9dFrzEe1McA-1tQ08jpbkG5-MgQIfaOZXJI/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function gdpercapResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Correlation between Health & Education and GDP (Per Capita)',
+                bubble: {textStyle: {fontSize: 10}},                   
+                colorAxis: {colors: ['#66ffff', '#0066cc']},          
+                vAxis: {title: 'Education Spending Per Capita (in $)'},
+                hAxis: {title: 'Health Spending Per Capita (in $)'}
+                
+            };
+            
+            var chart = new google.visualization.BubbleChart(document.getElementById('gdp_percap_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function growthhlResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Growth in Healthcare (%Percentage)',                                 
+                       
+                vAxis: {title: 'Year (2012 -2017)'},
+                hAxis: {title: 'Percentage Change (Year Over Year)'},
+                width: 700,
+                height:450
+                
+            };
+            
+            var chart = new google.visualization.BarChart(document.getElementById('growth_hl_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function growthhlabsResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Growth in Healthcare (Absolute $)',                               
+                       
+                vAxis: {title: 'Year (2012 -2017)'},
+                hAxis: {title: 'Absolute Change (Year Over Year)'},
+                width: 700,
+                height:450
+                
+            };
+            
+            var chart = new google.visualization.BarChart(document.getElementById('growth_hl_abs_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function growthedResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Growth in Education (%Percentage)',                                 
+                       
+                vAxis: {title: 'Year (2012 -2017)'},
+                hAxis: {title: 'Percentage Change (Year Over Year)'},
+                width: 700,
+                height:450
+                
+            };
+            
+            var chart = new google.visualization.BarChart(document.getElementById('growth_ed_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function growthedabsResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Growth in Education (Absolute $)',                               
+                       
+                vAxis: {title: 'Year (2012 -2017)'},
+                hAxis: {title: 'Absolute Change (Year Over Year)'},
+                width: 700,
+                height:450
+                
+            };
+            
+            var chart = new google.visualization.BarChart(document.getElementById('growth_ed_abs_spending_div'));
+            chart.draw(data, options);
+        }
+    </script>
+
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>G20 Countries - Per Capita Spending</h1>
+        </div>
+        <div id="menu">
+            <a href="index.html">Home</a> <a href="breakdown.html" >Spending VS GDP</a> <a href="military.html" >Military Spending</a> <a href="percap.html" id="current_page">Per Capita</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+   
+    <div class="spacing-between-row style-padding-small align-center" id="G20" align="middle"></div>
+    <p>Amongst the selected G20 countries, the United States leads in terms of the per capita indicators - Military, GDP, Healthcare and Education - followed closely 
+        by Australia. Other developed countries like France, Germany have similar per capita amounts on Education but lower in terms of per capita spends on Military 
+        and Healthcare.<br>
+       <br>
+   </p>
+         
+    <div id="gdp_percap_spending_div" style= "width: 900px; height: 500px;"></div>
+    <hr>
+    <div id="header">
+        <h1>G20 Countries - Growth in Healthcare and Education Spending (Year Over Year) </h1>
+      </div>
+      <div id="content">
+        <p>
+            This section compares the growth in healthcare and education spending year over year, in percentage and absolute terms. Japan and Russia had the most negative
+            growth in both these sectors over the years. The United States consistently had positive growth rates for these two sectors for all years, that are being 
+            considered for this study. 
+        </p>       
+      </div>
+    <table class="columns">
+        <tr>
+          <td><div id="growth_hl_spending_div" style= "border: 1px solid #ccc"></div></td>
+          <td><div id="growth_hl_abs_spending_div" style="border: 1px solid #ccc"></div></td>
+         
+        </tr>
+      </table>
+
+      <hr>
+      <table class="columns">
+        <tr>
+          <td><div id="growth_ed_spending_div" style= "border: 1px solid #ccc"></div></td>
+          <td><div id="growth_ed_abs_spending_div" style="border: 1px solid #ccc"></div></td>
+         
+        </tr>
+      </table>
+    <div id="growth_hl_spending_div" style= "width: 900px; height: 500px;"></div>
+        
+   
+      
+    </body>
+</html>
+    
+

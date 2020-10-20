@@ -1,0 +1,55 @@
+h1, h2, h3 {
+    text-align: center;
+}
+
+body {
+    background-image: url("latest.JPG");
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font: 175% "century gothic", arial, sans-serif;
+    font-weight: bold;
+    color: #111;
+    margin: 0 0 12px 0;
+    padding: 5px 0 5px 0;
+}
+
+h2, h3 {
+    font-size: 22px;
+}
+p {
+    font: 50% "century gothic", arial, sans-serif;
+    font-size: 22px;
+}
+
+p {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+#menu {
+    background: #003182;
+    padding: 7px 10px 7px 10px;
+}
+
+#menu a {
+    padding: 9px 22px 5px 16px;
+    text-decoration: none;
+    text-align: center;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    font: 175% "century gothic", arial, sans-serif;
+    font-size: 18px;
+    border: 0;
+}
+
+#menu a:hover {
+    color: #c4c4c4;
+}
+
+#menu #current_page {
+    color: #c4c4c4;
+
+}
+
+

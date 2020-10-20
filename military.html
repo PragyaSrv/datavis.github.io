@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>G20 Countries Data - Military Spending VS Education & Healthcare Spending</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', {'packages': ['corechart', 'geochart']}); //must add GeoChart
+        google.charts.setOnLoadCallback(drawAllSheets);
+
+        function drawAllSheets(){
+            drawSheetName('EducationExp', 'SELECT A,H,J', educationSpendingResponseHandler);
+            drawSheetName('HealthPercGDP', 'SELECT A,M,N', healthSpendingResponseHandler);
+            drawSheetName('EdT', 'SELECT A,B,C,D,E,F,G,H,I,J,K', edSpendtrendResponseHandler);
+            drawSheetName('HLT', 'SELECT A,B,C,D,E,F,G,H,I,J,K', hlSpendtrendResponseHandler);
+            drawSheetName('MLT', 'SELECT A,B,C,D,E,F,G,H,I,J,K', mlSpendtrendResponseHandler);
+            
+            
+        } //drawAllSheets
+
+        function drawSheetName(sheetName, query, responseHandler){
+            var queryString = encodeURIComponent(query);
+            var query = new google.visualization.Query(
+                'https://docs.google.com/spreadsheets/d/1gYnKJCaw9dFrzEe1McA-1tQ08jpbkG5-MgQIfaOZXJI/gviz/tq?sheet='
+                + sheetName + '&headers=1&tq=' + queryString);
+            query.send(responseHandler);
+        } //drawSheetName
+
+        function educationSpendingResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Avg Education Spending VS Military Spending - 2012-17',
+                colors: ['#ECA403', '#E94D20'],
+                vAxis: {title: 'Spending in Billions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 750,
+                height:500
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('education_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function healthSpendingResponseHandler(response) {
+            var data = response.getDataTable();
+           
+
+            var options = {
+                title:'Avg Healthcare Spending VS Military Spending - 2012-17',
+                colors: ['#15A0C8', '#E94D20'],
+                vAxis: {title: 'Spending in Trillions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 750,
+                height:500
+            };
+
+            var chart = new google.visualization.ColumnChart(document.getElementById('health_spending_div'));
+            chart.draw(data, options);
+        }
+
+        function edSpendtrendResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Education Spending - 2012-17',                
+                vAxis: {title: 'Spending in Billions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('ed_sp_div'));
+            chart.draw(data, options);
+        }
+
+        function hlSpendtrendResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Healthcare Spending - 2012-17',                
+                vAxis: {title: 'Spending in Trillions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('hl_sp_div'));
+            chart.draw(data, options);
+        }
+
+        function mlSpendtrendResponseHandler(response) {
+            var data = response.getDataTable();
+            
+
+            var options = {
+                title:'Military Spending - 2012-17',                
+                vAxis: {title: 'Spending in Billions ($)', format:'short'},
+                hAxis: {title: 'Country'},
+                width: 500,
+                height:400
+            };
+
+            var chart = new google.visualization.LineChart(document.getElementById('ml_sp_div'));
+            chart.draw(data, options);
+        }
+
+        
+    </script>
+</head>
+<body>
+    <div id="main">
+        <div id="header">
+            <h1>G20 Countries - Military Spending VS Education & Healthcare Spending</h1>
+        </div>
+        <div id="menu">
+            <a href="index.html">Home</a> <a href="breakdown.html" >Spending VS GDP</a> <a href="military.html" id="current_page">Military Spending</a> <a href="percap.html">Per Capita</a>
+            <a href="about.html">About</a>
+        </div>
+    </div>
+    <div id="content">
+        <p>
+            This section compares the spendings in the education and healthcare sectors with military spends. The United States leads in both these areas, followed by China.
+            France, Germany and Japan spend more on their education and healthcare sectors as compared to military.
+            
+        </p>
+        
+    </div><!-- content -->
+    <table class="columns">
+        <tr>
+          <td><div id="education_spending_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="health_spending_div" style="border: 1px solid #ccc"></div></td>
+         
+        </tr>
+      </table>
+
+      <hr>
+      <div id="header">
+        <h1>G20 Countries - Education, Healthcare, Military Spendings for 2012-2017</h1>
+      </div>
+      <div id="content">
+        <p>
+            This section compares the absolute spendings in Military, Healthcare and Education over the years by each country. Countries spend significantly more
+            on healthcare than education or military. The US has the hishest spends in all three areas, followed by China. Russia follows China in  military spends.    
+        </p>       
+      </div>
+
+      <table class="columns">
+        <tr>
+          <td><div id="ed_sp_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="hl_sp_div" style="border: 1px solid #ccc"></div></td>
+          <td><div id="ml_sp_div" style="border: 1px solid #ccc"></div></td>
+        </tr>
+      </table>
+
+      <div class="style-margin style-content style-padding-relative" style="max-width:1200px;margin-top:50px"></div>
+      <div class="spacing-between-row style-padding-small align-center" id="G20" align="middle"></div>
+      <hr>
+    </body>
+</html>
+    
+
+    
+
+
+
+    
+    
+
+        
+            
+                                  
+        
+            
